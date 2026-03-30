@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from common.security import hash_password
 from common.exceptions import ConflictError, NotFoundError, BusinessRuleViolation
 from data.models import User
-from schemas.user import UserCreate, UserUpdate
+from schemas.user_schema import UserCreate, UserUpdate
 
 
 def create_user(db: Session, data: UserCreate) -> User:
