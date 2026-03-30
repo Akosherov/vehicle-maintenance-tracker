@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from routers.users import users_router
 from common.exceptions import AppException
+from routers.users import users_router
+from routers.clients import clients_router
 
 
 app = FastAPI(title="Vehicle Maintenance Tracker")
@@ -14,3 +15,4 @@ async def app_exception_handler(request, exc: AppException):
 
 
 app.include_router(users_router)
+app.include_router(clients_router)
