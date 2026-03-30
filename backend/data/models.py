@@ -18,6 +18,25 @@ class User(Base):
     updated_at: Mapped[datetime] = mapped_column(
         default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc)
     )
+
+
+class Client(Base):
+    __tablename__ = "clients"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+    email: Mapped[str | None] = mapped_column(unique=True)
+    phone_number: Mapped[str]
+    street_name: Mapped[str | None]
+    city: Mapped[str | None]
+    country: Mapped[str | None]
+    zip_code: Mapped[str | None]
+    notes: Mapped[str | None]
+    created_at: Mapped[datetime] = mapped_column(default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(
+        default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc)
+    )
     vehicles: Mapped[list["Vehicle"]] = relationship(back_populates="owner")
 
 
@@ -25,7 +44,7 @@ class Vehicle(Base):
     __tablename__ = "vehicles"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    owner_id: Mapped[int] = mapped_column(ForeignKey("clients.id"))
     vin: Mapped[str | None] = mapped_column(unique=True)
     license_plate: Mapped[str | None] = mapped_column(unique=True)
     make: Mapped[str]
@@ -66,7 +85,7 @@ class Vehicle(Base):
     )
     maintenance_logs: Mapped[list["MaintenanceLog"]] = relationship(back_populates="vehicle")
     reminders: Mapped[list["Reminder"]] = relationship(back_populates="vehicle")
-    owner: Mapped["User"] = relationship(back_populates="vehicles")
+    owner: Mapped["Client"] = relationship(back_populates="vehicles")
 
 
 class MaintenanceLog(Base):
