@@ -44,6 +44,7 @@ class Vehicle(Base):
     __tablename__ = "vehicles"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    status: Mapped[str] = mapped_column(default="waiting")
     owner_id: Mapped[int] = mapped_column(ForeignKey("clients.id"))
     vin: Mapped[str | None] = mapped_column(unique=True)
     license_plate: Mapped[str | None] = mapped_column(unique=True)

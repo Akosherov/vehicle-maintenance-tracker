@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from common.exceptions import AppException
 from routers.users import users_router
@@ -7,6 +8,13 @@ from routers.clients import clients_router
 
 
 app = FastAPI(title="Vehicle Maintenance Tracker")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 
 @app.exception_handler(AppException)
